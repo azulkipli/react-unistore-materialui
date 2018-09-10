@@ -1,20 +1,23 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { Provider } from "unistore/react";
 import { store } from "./store";
 
 // add container for hot reload
-import { AppContainer } from 'react-hot-loader';
+import { AppContainer } from "react-hot-loader";
 
-import ListItems from "./Components/listItems";
-import AddItems from "./Components/addItem";
+// import ListItems from "./Components/listItems";
+// import AddItems from "./Components/addItem";
 
-import registerServiceWorker from './registerServiceWorker';
+import Index from "./Pages/index";
+import SignIn from "./Pages/SignIn";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+import registerServiceWorker from "./registerServiceWorker";
+
+// const styles = {
+//   fontFamily: "sans-serif",
+//   textAlign: "center"
+// };
 
 // Wrap the rendering in a function:
 const render = () => {
@@ -22,14 +25,10 @@ const render = () => {
     // Wrap App inside AppContainer
     <AppContainer>
       <Provider store={store}>
-        <div style={styles}>
-          <h2>Welcome to unistore</h2>
-          <AddItems />
-          <ListItems />
-        </div>
+        <SignIn />
       </Provider>
     </AppContainer>,
-    document.getElementById('root')
+    document.getElementById("root")
   );
 };
 
@@ -52,7 +51,7 @@ render();
 
 // Webpack Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./App', () => {
+  module.hot.accept("./App", () => {
     render();
   });
 }
