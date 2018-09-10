@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+
+import { connect } from "unistore/react";
+import { actions } from "../store";
 
 const styles = theme => ({
   layout: {
@@ -43,36 +44,48 @@ const styles = theme => ({
   }
 });
 
-function SignIn(props) {
-  const { classes } = props;
+class SignIn extends React.Component {
+  postlogin = async () => {
+    await this.props.doLogin();
+    const current_login = this.props.login;
+    // console.log("current_login", current_login);
+    if (current_login === true) this.props.history.push("/account");
+  };
+  render() {
+    const { classes, doLogin, setField } = this.props;
+    // console.log("sigin props:", this.props);
 
-  return (
-    <React.Fragment>
-      {/* <CssBaseline /> */}
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography variant="headline">LOGO</Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <Input id="email" name="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" />
-            </FormControl>
-            <Button type="submit" fullWidth variant="raised" color="default" className={classes.submit}>
-              Login
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </React.Fragment>
-  );
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography variant="headline">Sign In</Typography>
+            <form className={classes.form} onSubmit={event => event.preventDefault()}>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <Input id="email" name="email" autoFocus onChange={e => setField(e)} />
+              </FormControl>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input name="password" type="password" id="password" onChange={e => setField(e)} />
+              </FormControl>
+              <Button type="submit" fullWidth variant="raised" color="default" onClick={() => this.postlogin()} className={classes.submit}>
+                Login
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </React.Fragment>
+    );
+  }
 }
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default connect(
+  "login,email,password",
+  actions
+)(withStyles(styles)(SignIn));

@@ -1,21 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import MainRoute from "./routes/MainRoute";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-class App extends Component {
+import { connect } from "unistore/react";
+import { actions } from "./store";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  }
+});
+
+class App extends React.Component {
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className={classes.root}>
+        <MainRoute />
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withRouter(withStyles(styles)(App));

@@ -5,53 +5,28 @@ import { store } from "./store";
 
 // add container for hot reload
 import { AppContainer } from "react-hot-loader";
+import { BrowserRouter } from "react-router-dom";
 
-// import ListItems from "./Components/listItems";
-// import AddItems from "./Components/addItem";
-
-import Index from "./Pages/index";
-import SignIn from "./Pages/SignIn";
+import App from "./App";
 
 import registerServiceWorker from "./registerServiceWorker";
 
-// const styles = {
-//   fontFamily: "sans-serif",
-//   textAlign: "center"
-// };
-
-// Wrap the rendering in a function:
-const render = () => {
+// reaquired to use react-hot-loader
+require("react-hot-loader/patch");
+// console.log("store", store);
+const rootEl = document.getElementById("root");
+const render = Component =>
   ReactDOM.render(
-    // Wrap App inside AppContainer
     <AppContainer>
       <Provider store={store}>
-        <SignIn />
+        <BrowserRouter>
+          <Component />
+        </BrowserRouter>
       </Provider>
     </AppContainer>,
-    document.getElementById("root")
+    rootEl
   );
-};
 
-// render(
-//   <Provider store={store}>
-//     <div style={styles}>
-//       <h2>Welcome to unistore</h2>
-//       <AddItems />
-//       <ListItems />
-//     </div>
-//   </Provider>,
-//   document.getElementById("root")
-// );
-
-// Do this once
+render(App);
+if (module.hot) module.hot.accept("./App", () => render(App));
 registerServiceWorker();
-
-// Render once
-render();
-
-// Webpack Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept("./App", () => {
-    render();
-  });
-}
