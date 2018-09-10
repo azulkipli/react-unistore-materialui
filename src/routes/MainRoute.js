@@ -46,18 +46,6 @@ const NoMatch = Loadable({
   loading: () => <Loading />
 });
 
-const fakeAuth = {
-  login: false,
-  authenticate(cb) {
-    this.login = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.login = false;
-    setTimeout(cb, 100);
-  }
-};
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const login = rest.login;
   return (
