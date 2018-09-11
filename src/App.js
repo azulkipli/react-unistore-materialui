@@ -3,9 +3,10 @@ import { withRouter } from "react-router-dom";
 import MainRoute from "./routes/MainRoute";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
+import withRoot from "./withRoot";
 
-// import { connect } from "unistore/react";
-// import { actions } from "./store";
+import { connect } from "unistore/react";
+import { actions } from "./store";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -28,6 +29,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import DraftsIcon from "@material-ui/icons/Drafts";
+import SettingsIcon from "@material-ui/icons/Settings";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const styles = theme => ({
   root: {
@@ -43,10 +47,19 @@ const styles = theme => ({
     // marginRight: 20
   },
   list: {
-    width: "250"
+    width: "250px"
   },
   topbar: {
     width: "100%"
+  },
+  bottomNav: {
+    position: "fixed",
+    bottom: "15px",
+    width: "100%"
+  },
+  bottomNavAct: {
+    minWidth: "72px",
+    maxWidth: "120px"
   }
 });
 
@@ -70,16 +83,7 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { bottomNav, openDrawer } = this.state;
-
-    const sideList = (
-      <div className={classes.list}>
-        <List>satu</List>
-        <Divider />
-        <List>dua</List>
-      </div>
-    );
-
+    const { openDrawer } = this.state;
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
@@ -96,16 +100,16 @@ class App extends React.Component {
           </Toolbar>
         </AppBar>
         <MainRoute />
-        <BottomNavigation onChange={this.changeNav} showLabels className={classes.root}>
-          <BottomNavigationAction value="menu" icon={<MenuIcon />} />
-          <BottomNavigationAction value="explore" icon={<ExploreIcon />} />
-          <BottomNavigationAction value="camera" icon={<CameraAltIcon />} />
-          <BottomNavigationAction value="notification" icon={<NotificationsIcon />} />
+        <BottomNavigation onChange={this.changeNav} showLabels className={classes.bottomNav}>
+          <BottomNavigationAction value="menu" icon={<MenuIcon />} className={classes.bottomNavAct} />
+          <BottomNavigationAction value="explore" icon={<ExploreIcon />} className={classes.bottomNavAct} />
+          <BottomNavigationAction value="camera" icon={<CameraAltIcon />} className={classes.bottomNavAct} />
+          <BottomNavigationAction value="notification" icon={<NotificationsIcon />} className={classes.bottomNavAct} />
           <BottomNavigationAction value="account" icon={<PersonIcon />} />
         </BottomNavigation>
         <Drawer open={openDrawer} onClose={() => this.toggleDrawer()}>
           <div tabIndex={0} role="button" onClick={() => this.toggleDrawer()} onKeyDown={() => this.toggleDrawer()}>
-            <List component="nav">
+            <List component="nav" className={classes.list}>
               <ListItem button>
                 <ListItemIcon>
                   <InboxIcon />
@@ -120,12 +124,24 @@ class App extends React.Component {
               </ListItem>
             </List>
             <Divider />
-            <List component="nav">
+            <List component="nav" className={classes.list}>
               <ListItem button>
-                <ListItemText primary="Trash" />
+                <ListItemIcon>
+                  <FavoriteIcon />
+                </ListItemIcon>
+                <ListItemText primary="Favorite" />
               </ListItem>
-              <ListItem button component="a" href="#simple-list">
-                <ListItemText primary="Spam" />
+              <ListItem button>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+              </ListItem>
+              <ListItem button onClick={() => this.props.doLogout()}>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
               </ListItem>
             </List>
           </div>
@@ -139,4 +155,9 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles)(App));
+export default connect(
+  "login,email",
+  actions
+)(withRouter(withRoot(withStyles(styles)(App))));
+
+// export default withRouter(withRoot(withStyles(styles)(App)));

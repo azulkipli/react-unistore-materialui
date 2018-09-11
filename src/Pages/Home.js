@@ -1,24 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-import withRoot from "../withRoot";
-import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  }
-});
+const Home = () => (
+  <Paper elevation={1}>
+    <Typography variant="headline" component="h3">
+      This is a sheet of paper.
+    </Typography>
+    <Typography component="p">Paper can be used to build surface or other elements for your application.</Typography>
+  </Paper>
+);
 
-class Home extends React.Component {
-  render() {
-    const { classes } = this.props;
-
-    return <div className={classes.root}>HOME</div>;
-  }
-}
-
-Home.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withRoot(withStyles(styles)(Home));
+export default Home;

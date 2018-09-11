@@ -11,13 +11,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import { connect } from "unistore/react";
 import { actions } from "../store";
+import withRoot from "../withRoot";
 
 const styles = theme => ({
   layout: {
     width: "auto",
     display: "block", // Fix IE11 issue.
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 400,
       marginLeft: "auto",
@@ -25,8 +26,8 @@ const styles = theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing.unit * 4,
-    marginBottom: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -89,4 +90,4 @@ SignIn.propTypes = {
 export default connect(
   "login,email,password",
   actions
-)(withStyles(styles)(SignIn));
+)(withRoot(withStyles(styles)(SignIn)));

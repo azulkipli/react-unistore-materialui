@@ -63,11 +63,11 @@ const MainRoute = connect(
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/signin" component={SignIn} />
+    <Route login={login} path="/explore" component={Explore} />
     <PrivateRoute login={login} path="/account" component={Account} />
     <PrivateRoute login={login} path="/camera" component={Camera} />
     <PrivateRoute login={login} path="/inbox" component={Inbox} />
     <PrivateRoute login={login} path="/notification" component={Notification} />
-    <PrivateRoute login={login} path="/explore" component={Explore} />
     <Route component={NoMatch} />
   </Switch>
 ));

@@ -32,6 +32,22 @@ export const actions = store => ({
     if (event.target.name === "password") return { password: event.target.value };
   },
 
+  async doLogout(state) {
+    let result = await axios
+      .get("http://localhost:3232")
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        return true;
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+    console.log("doLogin result", result);
+    return { login: false };
+  },
+
   async doLogin(state) {
     let result = await axios
       .get("http://localhost:3232")
@@ -45,6 +61,6 @@ export const actions = store => ({
         console.log(error);
       });
     console.log("doLogin result", result);
-    return { login: result };
+    return { login: true };
   }
 });
