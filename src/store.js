@@ -5,7 +5,6 @@ import persistStore from "unissist";
 import localStorageAdapter from "unissist/integrations/localStorageAdapter";
 
 const initialState = {
-  count: 0,
   email: "",
   password: "",
   confirm_password: "",
@@ -28,6 +27,22 @@ export const actions = store => ({
     if (event.target.name === "password") return { password: event.target.value };
   },
 
+  async doSignup(state) {
+    let result = await axios
+      .get("http://localhost:3232")
+      .then(function(response) {
+        // handle success
+        console.log(response.data);
+        return true;
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+    console.log("doSignup result", result);
+    return { login: true };
+  },
+
   async doLogout(state) {
     let result = await axios
       .get("http://localhost:3232")
@@ -40,7 +55,7 @@ export const actions = store => ({
         // handle error
         console.log(error);
       });
-    console.log("doLogin result", result);
+    console.log("doLogout result", result);
     return { login: false };
   },
 

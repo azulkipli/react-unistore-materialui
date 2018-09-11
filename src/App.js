@@ -32,6 +32,7 @@ import DraftsIcon from "@material-ui/icons/Drafts";
 import SettingsIcon from "@material-ui/icons/Settings";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
 const styles = theme => ({
   root: {
@@ -81,8 +82,15 @@ class App extends React.Component {
     this.setState({ openDrawer: !this.state.openDrawer });
   };
 
+  Logout = () => {
+    this.props.doLogout();
+    if (this.props.login) {
+      this.props.history.push("/");
+    }
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, login, history } = this.props;
     const { openDrawer } = this.state;
     return (
       <div className={classes.root}>
@@ -91,10 +99,10 @@ class App extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               {/* <MenuIcon /> */}
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.logo} onClick={() => this.props.history.push("/")}>
-              THE LOGO
+            <Typography variant="title" color="inherit" className={classes.logo} onClick={() => history.push("/")}>
+              LOGO
             </Typography>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Inbox">
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Inbox" onClick={() => history.push("/inbox")}>
               <InboxIcon />
             </IconButton>
           </Toolbar>
@@ -137,12 +145,21 @@ class App extends React.Component {
                 </ListItemIcon>
                 <ListItemText primary="Settings" />
               </ListItem>
-              <ListItem button onClick={() => this.props.doLogout()}>
-                <ListItemIcon>
-                  <ExitToAppIcon />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-              </ListItem>
+              {login ? (
+                <ListItem button onClick={() => this.Logout()}>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </ListItem>
+              ) : (
+                <ListItem button onClick={() => history.push("/signin")}>
+                  <ListItemIcon>
+                    <AccountBoxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
             </List>
           </div>
         </Drawer>
@@ -159,5 +176,3 @@ export default connect(
   "login,email",
   actions
 )(withRouter(withRoot(withStyles(styles)(App))));
-
-// export default withRouter(withRoot(withStyles(styles)(App)));

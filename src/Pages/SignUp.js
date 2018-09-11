@@ -45,13 +45,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   bottomBtn: {
-    marginBottom: "70px"
+    marginBottom: "80px"
   }
 });
 
-class SignIn extends React.Component {
-  postlogin = async () => {
-    await this.props.doLogin();
+class SignUp extends React.Component {
+  postSignUp = async () => {
+    await this.props.doSignup();
     const current_login = this.props.login;
     // console.log("current_login", current_login);
     if (current_login === true) this.props.history.push("/account");
@@ -59,13 +59,12 @@ class SignIn extends React.Component {
   render() {
     const { classes, setField, history } = this.props;
     // console.log("sigin props:", this.props);
-
     return (
       <React.Fragment>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <Typography variant="headline">Sign In</Typography>
+            <Typography variant="headline">Sign Up</Typography>
             <form className={classes.form} onSubmit={event => event.preventDefault()}>
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="email">Email</InputLabel>
@@ -76,16 +75,24 @@ class SignIn extends React.Component {
                 <Input name="password" type="password" id="password" onChange={e => setField(e)} />
               </FormControl>
               <FormControl margin="normal" fullWidth>
-                <InputLabel htmlFor="confirm_password">Confirm Password</InputLabel>
-                <Input name="confirm_password" type="password" id="confirm_password" onChange={e => setField(e)} />
+                <InputLabel htmlFor="user_name">Username</InputLabel>
+                <Input name="user_name" type="text" id="user_name" onChange={e => setField(e)} />
               </FormControl>
-              <Button type="submit" fullWidth variant="raised" color="default" onClick={() => this.postlogin()} className={classes.submit}>
-                Signin
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="full_name">Fullname</InputLabel>
+                <Input name="full_name" type="text" id="full_name" onChange={e => setField(e)} />
+              </FormControl>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="mobile_phone">Mobilephone</InputLabel>
+                <Input name="mobile_phone" type="text" id="mobile_phone" onChange={e => setField(e)} />
+              </FormControl>
+              <Button type="submit" fullWidth variant="raised" color="default" onClick={() => this.postSignUp()} className={classes.submit}>
+                Signup
               </Button>
             </form>
           </Paper>
-          <Button type="submit" fullWidth color="default" onClick={() => history.push("/signup")} className={classes.bottomBtn}>
-            Signup
+          <Button type="submit" fullWidth color="default" onClick={() => history.push("/signin")} className={classes.bottomBtn}>
+            Signin
           </Button>
         </main>
       </React.Fragment>
@@ -93,11 +100,11 @@ class SignIn extends React.Component {
   }
 }
 
-SignIn.propTypes = {
+SignUp.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default connect(
-  "login,email,password",
+  "login,email,password,confirm_password,full_name,user_name,mobile_phone",
   actions
-)(withRoot(withStyles(styles)(SignIn)));
+)(withRoot(withStyles(styles)(SignUp)));

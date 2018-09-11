@@ -23,7 +23,8 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    width: "100%"
+    width: "100%",
+    marginTop: "15px"
   },
   bigAvatar: {
     width: 100,
@@ -34,7 +35,7 @@ const styles = theme => ({
   },
   listItem: {
     display: "inline-flex",
-    width: "25%"
+    width: "23.5%"
   }
 });
 
@@ -43,73 +44,71 @@ const tileData = [
     img: "https://material-ui.com/static/images/grid-list/breakfast.jpg",
     title: "Breakfast",
     author: "author",
-    cols: 2
+    cols: 2,
+    key: 1
   },
   {
     img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
-    title: "burgers",
+    title: "burgers2",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 2
   },
   {
     img: "https://material-ui.com/static/images/grid-list/camera.jpg",
-    title: "burgers",
+    title: "burgers3",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 3
   },
   {
     img: "https://material-ui.com/static/images/grid-list/morning.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 4
   },
   {
     img: "https://material-ui.com/static/images/grid-list/hats.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 5
   },
   {
     img: "https://material-ui.com/static/images/grid-list/honey.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 6
   },
   {
     img: "https://material-ui.com/static/images/grid-list/vegetables.jpg",
     title: "Breakfast",
     author: "author",
-    cols: 2
+    cols: 2,
+    key: 7
   },
   {
     img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 8
   },
   {
     img: "https://material-ui.com/static/images/grid-list/camera.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
+    cols: 1,
+    key: 9
   },
   {
     img: "https://material-ui.com/static/images/grid-list/morning.jpg",
     title: "burgers",
     author: "author",
-    cols: 1
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/hats.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/honey.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1
+    cols: 1,
+    key: 10
   }
 ];
 
@@ -145,7 +144,7 @@ class Account extends React.Component {
         <div className={classes.row}>
           <GridList cellHeight={160} className={classes.gridList} cols={3}>
             {tileData.map(tile => (
-              <GridListTile key={tile.img} cols={tile.cols || 1}>
+              <GridListTile key={tile.key} cols={tile.cols || 1}>
                 <img src={tile.img} alt={tile.title} />
               </GridListTile>
             ))}

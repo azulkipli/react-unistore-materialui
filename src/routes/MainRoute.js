@@ -16,6 +16,11 @@ const SignIn = Loadable({
   loading: () => <Loading />
 });
 
+const SignUp = Loadable({
+  loader: () => import(/* webpackChunkName: "signup"*/ "../Pages/SignUp"),
+  loading: () => <Loading />
+});
+
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account"*/ "../Pages/Account"),
   loading: () => <Loading />
@@ -27,17 +32,17 @@ const Explore = Loadable({
 });
 
 const Camera = Loadable({
-  loader: () => import(/* webpackChunkName: "camera"*/ "../Pages/Explore"),
+  loader: () => import(/* webpackChunkName: "camera"*/ "../Pages/Inbox"),
   loading: () => <Loading />
 });
 
 const Inbox = Loadable({
-  loader: () => import(/* webpackChunkName: "inbox"*/ "../Pages/Explore"),
+  loader: () => import(/* webpackChunkName: "inbox"*/ "../Pages/Inbox"),
   loading: () => <Loading />
 });
 
 const Notification = Loadable({
-  loader: () => import(/* webpackChunkName: "inbox"*/ "../Pages/Explore"),
+  loader: () => import(/* webpackChunkName: "notification"*/ "../Pages/Notification"),
   loading: () => <Loading />
 });
 
@@ -59,17 +64,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 const MainRoute = connect(
   "login,email,password",
   actions
-)(({ login }) => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/signin" component={SignIn} />
-    <Route login={login} path="/explore" component={Explore} />
-    <PrivateRoute login={login} path="/account" component={Account} />
-    <PrivateRoute login={login} path="/camera" component={Camera} />
-    <PrivateRoute login={login} path="/inbox" component={Inbox} />
-    <PrivateRoute login={login} path="/notification" component={Notification} />
-    <Route component={NoMatch} />
-  </Switch>
-));
+)(({ login }) => {
+  const current_store = JSON.parse(localStorage.getItem("unistorePersist"));
+  let current_login = login;
+  if (current_store.login) current_login = current_store.login;
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/explore" component={Explore} />
+      <PrivateRoute login={current_login} path="/account" component={Account} />
+      <PrivateRoute login={current_login} path="/camera" component={Camera} />
+      <PrivateRoute login={current_login} path="/inbox" component={Inbox} />
+      <PrivateRoute login={current_login} path="/notification" component={Notification} />
+      <Route component={NoMatch} />
+    </Switch>
+  );
+});
 
 export default MainRoute;
