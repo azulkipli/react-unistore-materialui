@@ -1,6 +1,8 @@
 import createStore from "unistore";
 import devtools from "unistore/devtools";
 import axios from "axios";
+import persistStore from "unissist";
+import localStorageAdapter from "unissist/integrations/localStorageAdapter";
 
 const initialState = {
   count: 0,
@@ -13,20 +15,14 @@ const initialState = {
   login: false
 };
 
+const adapter = localStorageAdapter();
+
 export const store = process.env.NODE_ENV === "production" ? createStore(initialState) : devtools(createStore(initialState));
+
+persistStore(store, adapter);
 
 export const actions = store => ({
   // Actions can just return a state update:
-  increment(state) {
-    return { count: state.count + 1 };
-  }, // The above example as an Arrow Function:
-  increment2: ({ count }) => ({ count: count + 1 }), //Actions receive current state as first parameter and any other params next
-  //check this function as <button onClick={incrementAndLog}>
-
-  incrementAndLog: ({ count }, event) => {
-    console.info(event);
-    return { count: count + 1 };
-  },
   setField: ({ email, password }, event) => {
     if (event.target.name === "email") return { email: event.target.value };
     if (event.target.name === "password") return { password: event.target.value };

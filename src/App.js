@@ -54,7 +54,7 @@ const styles = theme => ({
   },
   bottomNav: {
     position: "fixed",
-    bottom: "15px",
+    bottom: "0",
     width: "100%"
   },
   bottomNavAct: {
@@ -92,7 +92,7 @@ class App extends React.Component {
               {/* <MenuIcon /> */}
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.logo} onClick={() => this.props.history.push("/")}>
-              LOGO
+              THE LOGO
             </Typography>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Inbox">
               <InboxIcon />
