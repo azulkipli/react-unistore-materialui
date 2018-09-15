@@ -1,12 +1,13 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import MainRoute from "./routes/MainRoute";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import withRoot from "./withRoot";
+import { withRouter } from "react-router-dom";
 
 import { connect } from "unistore/react";
 import { actions } from "./store";
+import { hot } from "react-hot-loader";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -42,23 +43,21 @@ const styles = theme => ({
     flexGrow: 1,
     textAlign: "center",
     cursor: "pointer"
-    // fontWeight: "bold",
-    // color: "blue"
   },
   menuButton: {
-    // marginLeft: -12,
-    marginRight: -10
+    marginRight: -theme.spacing.unit
   },
   list: {
     width: "250px"
   },
-  topbar: {
-    width: "100%"
+  appbar: {
+    boxShadow: "0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
   },
   bottomNav: {
     position: "fixed",
     bottom: "0",
-    width: "100%"
+    width: "100%",
+    boxShadow: "0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
   },
   bottomNavAct: {
     minWidth: "72px",
@@ -96,7 +95,7 @@ class App extends React.Component {
     const { openDrawer } = this.state;
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               {/* <MenuIcon /> */}
@@ -177,4 +176,4 @@ App.propTypes = {
 export default connect(
   "login,email",
   actions
-)(withRouter(withRoot(withStyles(styles)(App))));
+)(hot(module)(withRouter(withRoot(withStyles(styles)(App)))));
