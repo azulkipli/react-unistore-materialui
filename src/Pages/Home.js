@@ -25,7 +25,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
     marginBottom: theme.spacing.unit * 2
   }
 });

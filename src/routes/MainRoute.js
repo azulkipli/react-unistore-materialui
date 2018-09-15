@@ -51,11 +51,12 @@ const NoMatch = Loadable({
   loading: () => <Loading />
 });
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const login = rest.login;
+const PrivateRoute = ({ component: Component, ...args }) => {
+  const login = args.login;
+  console.log("args", args);
   return (
     <Route
-      {...rest}
+      {...args}
       render={props => (login ? <Component {...props} /> : <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />)}
     />
   );
@@ -65,9 +66,11 @@ const MainRoute = connect(
   "login,email,password",
   actions
 )(({ login }) => {
-  const current_store = JSON.parse(localStorage.getItem("unistorePersist"));
+  const c_store = JSON.parse(localStorage.getItem("unistorePersist"));
+  console.log("c_store", c_store);
   let current_login = login;
-  if (current_store.login) current_login = current_store.login;
+  if (c_store.hasOwnProperty("login") && c_store.login) current_login = c_store.login;
+  console.log("current_login", current_login);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
