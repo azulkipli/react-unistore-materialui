@@ -28,35 +28,35 @@ const BottomNav = props => (
   <BottomNavigation onChange={props.changeNav} showLabels className={props.classes.bottomNav}>
     <BottomNavigationAction
       tabIndex="1"
-      ariaLabel="menu"
+      aria-label="menu"
       value="menu"
       icon={<MenuIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
       tabIndex="2"
-      ariaLabel="explore"
+      aria-label="explore"
       value="explore"
       icon={<ExploreIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
       tabIndex="3"
-      ariaLabel="camera"
+      aria-label="camera"
       value="camera"
       icon={<CameraAltIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
       tabIndex="4"
-      ariaLabel="notification"
+      aria-label="notification"
       value="notification"
       icon={<NotificationsIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
       tabIndex="4"
-      ariaLabel="account"
+      aria-label="account"
       value="account"
       icon={<PersonIcon />}
     />

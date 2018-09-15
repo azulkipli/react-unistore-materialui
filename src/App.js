@@ -79,11 +79,11 @@ class App extends React.Component {
     this.setState({ openDrawer: !this.state.openDrawer });
   };
 
-  Logout = () => {
-    const { doLogout, login, history } = this.props;
-    doLogout();
-    if (!login) {
-      history.push("/");
+  Logout = async () => {
+    const { doLogout, history } = this.props;
+    await doLogout();
+    if (!this.props.login) {
+      history.replace("/");
     }
   };
 
@@ -91,6 +91,7 @@ class App extends React.Component {
     const { classes, login, history, location } = this.props;
     const { openDrawer } = this.state;
     const pathname = location.pathname;
+    const home = login ? "/explore" : "/";
     return (
       <div className={classes.root}>
         <Helmet>
@@ -114,7 +115,7 @@ class App extends React.Component {
               variant="title"
               color="default"
               className={classes.logo}
-              onClick={() => history.push("/")}
+              onClick={() => history.push(home)}
             >
               <img className={classes.imgLogo} src={logo} alt="Logo" />{" "}
               <span className={classes.txtLogo}>ReUniMa</span>

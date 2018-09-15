@@ -10,6 +10,7 @@ import { connect } from "unistore/react";
 import { actions } from "../store";
 import Loading from "../Components/Loading";
 import LazyLoad from "react-lazyload";
+import { tileData } from "../dummyData";
 
 const styles = theme => ({
   row: {
@@ -81,7 +82,7 @@ const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2p
 
 class Explore extends React.Component {
   render() {
-    const { classes, tileData } = this.props;
+    const { classes } = this.props;
 
     return (
       <React.Fragment>

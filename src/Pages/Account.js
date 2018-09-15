@@ -13,6 +13,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import LazyLoad from "react-lazyload";
 import Loading from "../Components/Loading";
+import { tileData } from "../dummyData";
 
 const styles = theme => ({
   row: {
@@ -68,7 +69,7 @@ const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2p
 
 class Account extends React.Component {
   render() {
-    const { classes, tileData } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.row}>

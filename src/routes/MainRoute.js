@@ -77,13 +77,13 @@ const MainRoute = connect(
   actions
 )(({ login }) => {
   const c_store = JSON.parse(localStorage.getItem("unistorePersist")) || {};
-  console.log("c_store", c_store);
+  // console.log("c_store", c_store);
   let current_login = login;
   if (c_store.hasOwnProperty("login") && c_store.login) current_login = c_store.login;
   // console.log("current_login", current_login);
   return (
     <Switch>
-      <Route exact path="/" component={current_login ? Explore : Home} />
+      <Route exact path="/" component={Home} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <PrivateRoute login={current_login} path="/explore" component={Explore} />

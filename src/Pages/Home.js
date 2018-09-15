@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { hot } from "react-hot-loader";
 import LazyLoad from "react-lazyload";
@@ -80,7 +81,12 @@ class Home extends React.Component {
               ))}
             </ul>
           </div>
-          <Button variant="outlined" color="default" className={classes.bottomBtn}>
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={() => this.props.history.push("/signup")}
+            className={classes.bottomBtn}
+          >
             Signup to explore more
           </Button>
         </main>
@@ -93,4 +99,4 @@ Home.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default hot(module)(withStyles(styles)(Home));
+export default hot(module)(withRouter(withStyles(styles)(Home)));

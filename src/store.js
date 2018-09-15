@@ -3,6 +3,11 @@ import devtools from "unistore/devtools";
 import axios from "axios";
 import persistStore from "unissist";
 import localStorageAdapter from "unissist/integrations/localStorageAdapter";
+import createHistory from "history/createBrowserHistory";
+const history = createHistory();
+
+// Get the current location.
+const location = history.location;
 
 const initialState = {
   email: "",
@@ -51,7 +56,8 @@ export const actions = store => ({
       .get("http://localhost:3232")
       .then(function(response) {
         // handle success
-        console.log(response.data);
+        console.log("doLogout res", response.data);
+        console.log("doLogout history", history);
         return true;
       })
       .catch(function(error) {
@@ -59,7 +65,10 @@ export const actions = store => ({
         console.log(error);
       });
     console.log("doLogout result", result);
-    return { login: false };
+    if (result) {
+      // history.push("/");
+      return { login: false };
+    }
   },
 
   async doLogin(state) {
@@ -75,6 +84,6 @@ export const actions = store => ({
         console.log(error);
       });
     console.log("doLogin result", result);
-    return { login: true };
+    return { login: result };
   }
 });
