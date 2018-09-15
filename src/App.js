@@ -14,6 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -35,6 +36,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
+import logo from "./images/material_logo.svg";
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -42,13 +45,25 @@ const styles = theme => ({
   logo: {
     flexGrow: 1,
     textAlign: "center",
-    cursor: "pointer"
+    cursor: "pointer",
+    fontSize: 12
+  },
+  imgLogo: {
+    display: "inline-block",
+    height: 32,
+    width: 32
+  },
+  txtLogo: {
+    display: "inline-block",
+    fontSize: 16,
+    lineHeight: "32px",
+    verticalAlign: "bottom"
   },
   menuButton: {
-    marginRight: -theme.spacing.unit
+    // marginRight: -theme.spacing.unit
   },
   list: {
-    width: "250px"
+    width: 250
   },
   appbar: {
     boxShadow: "0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
@@ -91,19 +106,20 @@ class App extends React.Component {
   };
 
   render() {
-    const { classes, login, history } = this.props;
+    const { classes, login, history, location } = this.props;
     const { openDrawer } = this.state;
+    const pathname = location.pathname;
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              {/* <MenuIcon /> */}
+            <IconButton className={classes.menuButton} color="default" aria-label="Menu">
+              {pathname !== "/" ? <NavigateBeforeIcon /> : ""}
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.logo} onClick={() => history.push("/")}>
-              LOGO
+            <Typography variant="title" color="default" className={classes.logo} onClick={() => history.push("/")}>
+              <img className={classes.imgLogo} src={logo} alt="Logo" /> <span className={classes.txtLogo}>Soca</span>
             </Typography>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Inbox" onClick={() => history.push("/inbox")}>
+            <IconButton className={classes.menuButton} color="default" aria-label="Inbox" onClick={() => history.push("/inbox")}>
               <InboxIcon />
             </IconButton>
           </Toolbar>

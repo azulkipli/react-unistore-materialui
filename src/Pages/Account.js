@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
+import { hot } from "react-hot-loader";
+import { connect } from "unistore/react";
+import { actions } from "../store";
 import Avatar from "@material-ui/core/Avatar";
 import classNames from "classnames";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
+import LazyLoad from "react-lazyload";
+import Loading from "../Components/Loading";
 
 const styles = theme => ({
   row: {
@@ -41,90 +45,30 @@ const styles = theme => ({
   }
 });
 
-const tileData = [
-  {
-    img: "https://material-ui.com/static/images/grid-list/breakfast.jpg",
-    title: "Breakfast",
-    author: "author",
-    cols: 2,
-    key: 1
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
-    title: "burgers2",
-    author: "author",
-    cols: 1,
-    key: 2
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/camera.jpg",
-    title: "burgers3",
-    author: "author",
-    cols: 1,
-    key: 3
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/morning.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 4
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/hats.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 5
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/honey.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 6
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/vegetables.jpg",
-    title: "Breakfast",
-    author: "author",
-    cols: 2,
-    key: 7
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 8
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/camera.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 9
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/morning.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 10
-  }
-];
+const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
+const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
+const li_1 = { width: "33.3333%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const li_2 = { width: "66.6667%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2px" };
 
 class Account extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, tileData } = this.props;
 
     return (
       <div className={classes.row}>
         <div className={classes.avatarWrap}>
-          <Avatar
-            alt="Adelle Charles"
-            src="https://material-ui.com/static/images/uxceo-128.jpg"
-            className={classNames(classes.avatar, classes.bigAvatar)}
+          <LazyLoad
+            offset={100}
+            height={100}
+            placeholder={<Loading />}
+            children={
+              <Avatar
+                alt="Adelle Charles"
+                src="https://material-ui.com/static/images/uxceo-128.jpg"
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+            }
           />
         </div>
         <div className={classes.row}>
@@ -144,13 +88,17 @@ class Account extends React.Component {
           </List>
         </div>
         <div className={classes.rowGrid}>
-          <GridList cellHeight={160} className={classes.gridList} cols={3}>
+          <ul style={ul_li}>
             {tileData.map(tile => (
-              <GridListTile key={tile.key} cols={tile.cols || 1}>
-                <img src={tile.img} alt={tile.title} />
-              </GridListTile>
+              <li key={tile.key} style={tile.cols === 2 ? li_2 : li_1}>
+                <LazyLoad key={tile.key} height={160} placeholder={<Loading />}>
+                  <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
+                    <img src={tile.img} alt={tile.title} style={tile.cols === 2 ? img_2 : img_1} />
+                  </div>
+                </LazyLoad>
+              </li>
             ))}
-          </GridList>
+          </ul>
         </div>
       </div>
     );
@@ -161,4 +109,9 @@ Account.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Account);
+// export default withStyles(styles)(Account);
+
+export default connect(
+  "login,tileData",
+  actions
+)(hot(module)(withRouter(withRoot(withStyles(styles)(Account)))));

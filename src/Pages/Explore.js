@@ -1,11 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import LazyLoad from "react-image-lazy-load";
+import { withRouter } from "react-router-dom";
+import { hot } from "react-hot-loader";
+import { connect } from "unistore/react";
+import { actions } from "../store";
+import Loading from "../Components/Loading";
+import LazyLoad from "react-lazyload";
 
 const styles = theme => ({
   row: {
@@ -44,113 +48,53 @@ const styles = theme => ({
     marginBottom: "80px"
   },
   bottomBtn: {
-    marginTop: "20px",
-    marginBottom: "80px"
+    display: "flex",
+    margin: "20px auto 80px",
+    textTransform: "capitalize"
+  },
+  headline: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: theme.spacing.unit * 1.5,
+    marginBottom: theme.spacing.unit * 1.5
   }
 });
 
-const tileData = [
-  {
-    img: "https://material-ui.com/static/images/grid-list/breakfast.jpg",
-    title: "Breakfast",
-    author: "author",
-    cols: 2,
-    key: 1
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
-    title: "burgers2",
-    author: "author",
-    cols: 1,
-    key: 2
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/camera.jpg",
-    title: "burgers3",
-    author: "author",
-    cols: 1,
-    key: 3
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/morning.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 4
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/hats.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 5
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/honey.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 6
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/vegetables.jpg",
-    title: "Breakfast",
-    author: "author",
-    cols: 2,
-    key: 7
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/burgers.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 8
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/camera.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 9
-  },
-  {
-    img: "https://material-ui.com/static/images/grid-list/morning.jpg",
-    title: "burgers",
-    author: "author",
-    cols: 1,
-    key: 10
-  }
-];
+const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
+const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
+const li_1 = { width: "33.3333%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const li_2 = { width: "66.6667%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2px" };
 
 class Explore extends React.Component {
   render() {
-    const { classes, history } = this.props;
+    const { classes, tileData } = this.props;
 
     return (
-      <div className={classes.rowWrap}>
-        <div className={classes.avatarWrap}>
-          <h3>Explore</h3>
-        </div>
-        <div className={classes.row}>
-          <GridList cellHeight={160} className={classes.gridList} cols={3}>
-            {tileData.map(tile => (
-              <GridListTile key={tile.key} cols={tile.cols || 1}>
-                <div className="filler" />
-                <LazyLoad
-                  height={160}
-                  offsetVertical={160}
-                  loaderImage
-                  originalSrc={tile.img}
-                  imageProps={{ src: require("../preloader.svg"), alt: tile.title, ref: "image", className: "className" }}
-                />
-              </GridListTile>
-            ))}
-          </GridList>
-        </div>
-        <Button fullWidth color="default" className={classes.bottomBtn} onClick={() => history.push("/signup")}>
-          Signup to explore more
-        </Button>
-      </div>
+      <React.Fragment>
+        <main className={classes.layout}>
+          <Typography variant="headline" className={classes.headline}>
+            Explore
+          </Typography>
+          <div className={classes.row}>
+            <ul style={ul_li}>
+              {tileData.map(tile => (
+                <li key={tile.key} style={tile.cols === 2 ? li_2 : li_1}>
+                  <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
+                    <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
+                      <img src={tile.img} alt={tile.title} style={tile.cols === 2 ? img_2 : img_1} />
+                    </div>
+                  </LazyLoad>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Button variant="outlined" color="default" className={classes.bottomBtn}>
+            More..
+          </Button>
+        </main>
+      </React.Fragment>
     );
   }
 }
@@ -159,4 +103,7 @@ Explore.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRoot(withStyles(styles)(Explore));
+export default connect(
+  "tileData",
+  actions
+)(hot(module)(withRouter(withRoot(withStyles(styles)(Explore)))));

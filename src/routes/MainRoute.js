@@ -3,8 +3,12 @@ import Loadable from "react-loadable";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store";
-
-const Loading = () => <div>Loading...</div>;
+import preloader from "../images/preloader.svg";
+const style = {
+  margin: "20px auto",
+  display: "flex"
+};
+const Loading = () => <img src={preloader} alt="loading..." style={style} />;
 
 const Home = Loadable({
   loader: () => import(/* webpackChunkName: "home"*/ "../Pages/Home"),
@@ -70,7 +74,7 @@ const MainRoute = connect(
   console.log("c_store", c_store);
   let current_login = login;
   if (c_store.hasOwnProperty("login") && c_store.login) current_login = c_store.login;
-  console.log("current_login", current_login);
+  // console.log("current_login", current_login);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
