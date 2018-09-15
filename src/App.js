@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "./store";
 import { hot } from "react-hot-loader";
+import { Helmet } from "react-helmet";
 // Material components
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -92,6 +93,18 @@ class App extends React.Component {
     const pathname = location.pathname;
     return (
       <div className={classes.root}>
+        <Helmet>
+          <title>reunima | react unistore material-ui</title>
+          <meta
+            name="description"
+            content="Progressive Web App using ReactJS Unistore Material-UI"
+          />
+          <meta
+            name="keywords"
+            content="pwa, reactjs, unistore, netlify, code-splitting, hot-reload"
+          />
+          <meta name="author" content="Azul" />
+        </Helmet>
         <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
             <IconButton className={classes.menuButton} color="default" aria-label="Menu">
@@ -104,7 +117,7 @@ class App extends React.Component {
               onClick={() => history.push("/")}
             >
               <img className={classes.imgLogo} src={logo} alt="Logo" />{" "}
-              <span className={classes.txtLogo}>Soca</span>
+              <span className={classes.txtLogo}>ReUniMa</span>
             </Typography>
             <IconButton
               className={classes.menuButton}
