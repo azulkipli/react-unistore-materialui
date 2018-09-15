@@ -63,8 +63,20 @@ const styles = theme => ({
 
 const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
 const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
-const li_1 = { width: "33.3333%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
-const li_2 = { width: "66.6667%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const li_1 = {
+  width: "33.3333%",
+  height: "160px",
+  overflow: "hidden",
+  listStyle: "none",
+  padding: "2.5px 2px"
+};
+const li_2 = {
+  width: "66.6667%",
+  height: "160px",
+  overflow: "hidden",
+  listStyle: "none",
+  padding: "2.5px 2px"
+};
 const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2px" };
 
 class Explore extends React.Component {
@@ -74,7 +86,7 @@ class Explore extends React.Component {
     return (
       <React.Fragment>
         <main className={classes.layout}>
-          <Typography variant="headline" className={classes.headline}>
+          <Typography variant="title" className={classes.headline}>
             Explore
           </Typography>
           <div className={classes.row}>
@@ -83,7 +95,11 @@ class Explore extends React.Component {
                 <li key={tile.key} style={tile.cols === 2 ? li_2 : li_1}>
                   <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
                     <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
-                      <img src={tile.img} alt={tile.title} style={tile.cols === 2 ? img_2 : img_1} />
+                      <img
+                        src={tile.img}
+                        alt={tile.title}
+                        style={tile.cols === 2 ? img_2 : img_1}
+                      />
                     </div>
                   </LazyLoad>
                 </li>

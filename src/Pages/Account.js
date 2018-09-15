@@ -22,6 +22,9 @@ const styles = theme => ({
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper
   },
+  rowGrid: {
+    marginBottom: "80px"
+  },
   avatarWrap: {
     display: "flex",
     flexWrap: "wrap",
@@ -47,8 +50,20 @@ const styles = theme => ({
 
 const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
 const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
-const li_1 = { width: "33.3333%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
-const li_2 = { width: "66.6667%", height: "160px", overflow: "hidden", listStyle: "none", padding: "2.5px 2px" };
+const li_1 = {
+  width: "33.3333%",
+  height: "160px",
+  overflow: "hidden",
+  listStyle: "none",
+  padding: "2.5px 2px"
+};
+const li_2 = {
+  width: "66.6667%",
+  height: "160px",
+  overflow: "hidden",
+  listStyle: "none",
+  padding: "2.5px 2px"
+};
 const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2px" };
 
 class Account extends React.Component {

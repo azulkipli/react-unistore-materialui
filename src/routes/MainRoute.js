@@ -61,7 +61,13 @@ const PrivateRoute = ({ component: Component, ...args }) => {
   return (
     <Route
       {...args}
-      render={props => (login ? <Component {...props} /> : <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />)}
+      render={props =>
+        login ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />
+        )
+      }
     />
   );
 };
@@ -77,10 +83,10 @@ const MainRoute = connect(
   // console.log("current_login", current_login);
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={current_login ? Explore : Home} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
-      <Route path="/explore" component={Explore} />
+      <PrivateRoute login={current_login} path="/explore" component={Explore} />
       <PrivateRoute login={current_login} path="/account" component={Account} />
       <PrivateRoute login={current_login} path="/camera" component={Camera} />
       <PrivateRoute login={current_login} path="/inbox" component={Inbox} />
