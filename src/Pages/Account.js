@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import classNames from "classnames";
@@ -36,6 +35,9 @@ const styles = theme => ({
   listItem: {
     display: "inline-flex",
     width: "23.5%"
+  },
+  gridList: {
+    paddingBottom: "90px"
   }
 });
 
@@ -141,7 +143,7 @@ class Account extends React.Component {
             </ListItem>
           </List>
         </div>
-        <div className={classes.row}>
+        <div className={classes.rowGrid}>
           <GridList cellHeight={160} className={classes.gridList} cols={3}>
             {tileData.map(tile => (
               <GridListTile key={tile.key} cols={tile.cols || 1}>
@@ -159,4 +161,4 @@ Account.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRoot(withStyles(styles)(Account));
+export default withStyles(styles)(Account);

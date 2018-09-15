@@ -11,7 +11,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import { connect } from "unistore/react";
 import { actions } from "../store";
-import withRoot from "../withRoot";
 
 const styles = theme => ({
   layout: {
@@ -100,4 +99,4 @@ SignIn.propTypes = {
 export default connect(
   "login,email,password",
   actions
-)(withRoot(withStyles(styles)(SignIn)));
+)(withStyles(styles)(SignIn));

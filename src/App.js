@@ -42,10 +42,12 @@ const styles = theme => ({
     flexGrow: 1,
     textAlign: "center",
     cursor: "pointer"
+    // fontWeight: "bold",
+    // color: "blue"
   },
   menuButton: {
     // marginLeft: -12,
-    // marginRight: 20
+    marginRight: -10
   },
   list: {
     width: "250px"

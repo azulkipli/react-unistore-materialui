@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import LazyLoad from "react-image-lazy-load";
 
 const styles = theme => ({
   row: {
@@ -40,6 +41,10 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    marginBottom: "80px"
+  },
+  bottomBtn: {
+    marginTop: "20px",
     marginBottom: "80px"
   }
 });
@@ -130,12 +135,19 @@ class Explore extends React.Component {
           <GridList cellHeight={160} className={classes.gridList} cols={3}>
             {tileData.map(tile => (
               <GridListTile key={tile.key} cols={tile.cols || 1}>
-                <img src={tile.img} alt={tile.title} />
+                <div className="filler" />
+                <LazyLoad
+                  height={160}
+                  offsetVertical={160}
+                  loaderImage
+                  originalSrc={tile.img}
+                  imageProps={{ src: require("../preloader.svg"), alt: tile.title, ref: "image", className: "className" }}
+                />
               </GridListTile>
             ))}
           </GridList>
         </div>
-        <Button variant="contained" size="small" className={classes.button} onClick={() => history.push("/signup")}>
+        <Button fullWidth color="default" className={classes.bottomBtn} onClick={() => history.push("/signup")}>
           Signup to explore more
         </Button>
       </div>
