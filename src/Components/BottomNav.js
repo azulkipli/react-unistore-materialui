@@ -27,39 +27,30 @@ const styles = theme => ({
 const BottomNav = props => (
   <BottomNavigation onChange={props.changeNav} showLabels className={props.classes.bottomNav}>
     <BottomNavigationAction
-      tabIndex="1"
       aria-label="menu"
       value="menu"
       icon={<MenuIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
-      tabIndex="2"
       aria-label="explore"
       value="explore"
       icon={<ExploreIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
-      tabIndex="3"
       aria-label="camera"
       value="camera"
       icon={<CameraAltIcon />}
       className={props.classes.bottomNavAct}
     />
     <BottomNavigationAction
-      tabIndex="4"
       aria-label="notification"
       value="notification"
       icon={<NotificationsIcon />}
       className={props.classes.bottomNavAct}
     />
-    <BottomNavigationAction
-      tabIndex="4"
-      aria-label="account"
-      value="account"
-      icon={<PersonIcon />}
-    />
+    <BottomNavigationAction aria-label="account" value="account" icon={<PersonIcon />} />
   </BottomNavigation>
 );
 

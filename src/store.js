@@ -57,7 +57,6 @@ export const actions = store => ({
       .then(function(response) {
         // handle success
         console.log("doLogout res", response.data);
-        console.log("doLogout history", history);
         return true;
       })
       .catch(function(error) {
