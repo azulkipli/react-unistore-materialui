@@ -70,7 +70,7 @@ const MainRoute = connect(
   "login,email,password",
   actions
 )(({ login }) => {
-  const c_store = JSON.parse(localStorage.getItem("unistorePersist"));
+  const c_store = JSON.parse(localStorage.getItem("unistorePersist")) || {};
   console.log("c_store", c_store);
   let current_login = login;
   if (c_store.hasOwnProperty("login") && c_store.login) current_login = c_store.login;
