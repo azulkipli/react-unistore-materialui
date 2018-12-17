@@ -10,7 +10,7 @@ import { actions } from "../store";
 import Loading from "../components/Loading";
 import LazyLoad from "react-lazyload";
 import placeholder from "../images/placeholder.png";
-import { sortedUniq, sortBy } from "lodash";
+import { sortedUniq } from "lodash";
 import Select from "react-select";
 import NoSsr from "@material-ui/core/NoSsr";
 import TextField from "@material-ui/core/TextField";
@@ -22,6 +22,9 @@ import { emphasize } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 
 const styles = theme => ({
+  layout: {
+    paddingBottom: 65
+  },
   row: {
     display: "flex",
     flexWrap: "wrap",
@@ -244,27 +247,57 @@ const selectComponents = {
 class Home extends React.Component {
   state = {
     single: null,
-    multi: null
+    multi: null,
+    restos: []
   };
 
   componentDidMount() {
     const { getResto } = this.props;
     // action to get resto list
-    getResto();
+    getResto().then(() => {
+      this.setState({
+        restos: this.props.listResto
+      });
+    });
   }
 
-  handleChange = name => value => {
-    this.setState({
-      [name]: value
+  handleChange = name => selected_time => {
+    console.log('selected_time', selected_time);
+    let filteredResto = [];
+    selected_time.map(time => {
+      this.state.restos.filter(item => {
+        if (item.open_time.includes(time.value)) {
+          filteredResto.push(item);
+        }
+      });
     });
+
+    if (selected_time.length > 0 && filteredResto.length > 0) {
+      this.setState({
+        restos: filteredResto
+      });
+    }
+
+    if (selected_time.length === 0) {
+      this.setState({
+        restos: this.props.listResto
+      });
+    }
+
+    this.setState({
+      [name]: selected_time
+    });
+    
   };
 
   render() {
     const { classes, theme, listResto } = this.props;
+    const { restos } = this.state;
+    console.log("restos", restos);
     const selectStyles = {
       input: base => ({
         ...base,
-        padding: '5px',
+        padding: "5px",
         color: theme.palette.text.primary,
         "& input": {
           font: "inherit"
@@ -288,7 +321,7 @@ class Home extends React.Component {
         }
         return false;
       });
-      filterOpenTimes = sortBy(sortedUniq(allOpenTimes), [function(o) { return o.label; }]);
+      filterOpenTimes = sortedUniq(allOpenTimes);
     }
 
     return (
@@ -297,40 +330,41 @@ class Home extends React.Component {
           <Typography variant="title" className={classes.headline}>
             Restaurants
           </Typography>
-          <div style={{padding: "10px"}}>
-          <NoSsr>
-            <Select
-              classes={classes}
-              styles={selectStyles}
-              textFieldProps={{
-                label: "Filter By Open Time",
-                InputLabelProps: {
-                  shrink: true
-                }
-              }}
-              options={filterOpenTimes}
-              components={selectComponents}
-              value={this.state.multi}
-              onChange={this.handleChange("multi")}
-              placeholder="Select open times"
-              isMulti
-            />
-          </NoSsr>
+          <div style={{ padding: "10px" }}>
+            <NoSsr>
+              <Select
+                classes={classes}
+                styles={selectStyles}
+                textFieldProps={{
+                  label: "Filter By Open Time",
+                  InputLabelProps: {
+                    shrink: true
+                  }
+                }}
+                options={filterOpenTimes}
+                components={selectComponents}
+                value={this.state.multi}
+                onChange={this.handleChange("multi")}
+                placeholder="Select open times"
+                isMulti
+              />
+            </NoSsr>
           </div>
           <div className={classes.row}>
             <ul style={ul_li}>
-              {listResto.map(tile => {
+              {restos.map((resto,index) => {
+                console.log('index', index);
                 return (
-                  <li key={tile.id} style={li_2}>
+                  <li key={resto.id} style={li_2}>
                     <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
-                      <div style={hiddenBlock}>
-                        <p style={pTitle}>{tile.name}</p>
+                      <div>
+                        <p style={pTitle}>{resto.name}</p>
                         <p style={pSubTitle}>
                           <b>Open Time:</b>
                           <br />
-                          {tile.open_time}
+                          {resto.open_time}
                         </p>
-                        <img src={placeholder} alt={tile.name} />
+                        <img src={placeholder} alt={resto.name} />
                       </div>
                     </LazyLoad>
                   </li>
@@ -338,9 +372,9 @@ class Home extends React.Component {
               })}
             </ul>
           </div>
-          <Button variant="outlined" color="default" className={classes.bottomBtn}>
+          {/* <Button variant="outlined" color="default" className={classes.bottomBtn}>
             More..
-          </Button>
+          </Button> */}
         </main>
       </React.Fragment>
     );
