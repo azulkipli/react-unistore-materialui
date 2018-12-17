@@ -94,6 +94,8 @@ class App extends React.Component {
     const { openDrawer } = this.state;
     const pathname = location.pathname;
     const home = login ? "/explore" : "/";
+    const exclNavback = ['/', home];
+    const showNavback = !exclNavback.includes(pathname)
     return (
       <div className={classes.root}>
         <Helmet>
@@ -111,7 +113,7 @@ class App extends React.Component {
         <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
             <IconButton className={classes.menuButton} color="default" aria-label="Menu">
-              {pathname !== "/" ? <NavigateBeforeIcon /> : ""}
+              {showNavback ? <NavigateBeforeIcon /> : ""}
             </IconButton>
             <Typography
               variant="title"
