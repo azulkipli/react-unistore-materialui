@@ -16,7 +16,9 @@ const initialState = {
   full_name: "",
   user_name: "",
   mobile_phone: "",
-  login: false
+  login: false,
+  listResto: [],
+  listOpenTimes: []
 };
 
 const adapter = localStorageAdapter();
@@ -26,15 +28,30 @@ export const store =
     ? createStore(initialState)
     : devtools(createStore(initialState));
 
-persistStore(store, adapter);
+// persistStore(store, adapter);
 
-const env = process.env
+const env = process.env;
 
 export const actions = store => ({
   // Actions can just return a state update:
   setField: ({ email, password }, event) => {
     if (event.target.name === "email") return { email: event.target.value };
     if (event.target.name === "password") return { password: event.target.value };
+  },
+
+  async getResto(state) {
+    let result = await axios
+      .get(env.REACT_APP_API_RESTO_LIST)
+      .then(function(response) {
+        // handle success
+        return response.data;
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+
+    return { listResto: result };
   },
 
   async doSignup(state) {

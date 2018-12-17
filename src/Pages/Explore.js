@@ -5,12 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
-import { hot } from "react-hot-loader";
 import { connect } from "unistore/react";
 import { actions } from "../store";
-import Loading from "../Components/Loading";
+import Loading from "../components/Loading";
 import LazyLoad from "react-lazyload";
-import { tileData } from "../dummyData";
+import placeholder from "../images/placeholder.png";
 
 const styles = theme => ({
   row: {
@@ -62,49 +61,76 @@ const styles = theme => ({
   }
 });
 
-const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
-const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
-const li_1 = {
-  width: "33.3333%",
-  height: "160px",
-  overflow: "hidden",
-  listStyle: "none",
-  padding: "2.5px 2px"
-};
 const li_2 = {
-  width: "66.6667%",
-  height: "160px",
+  width: "50%",
+  height: "auto",
   overflow: "hidden",
   listStyle: "none",
-  padding: "2.5px 2px"
+  padding: "20px 20px"
 };
-const ul_li = { display: "flex", flexWrap: "wrap", padding: 0, margin: "-2px -2px" };
+const hiddenBlock = { display: "block", overflow: "hidden", height: "auto" };
+
+const pTitle = {
+  fontSize: "16px",
+  fontWeight: "bold",
+  lineHeight: "16px",
+  padding: "0",
+  margin: "2px"
+};
+const pSubTitle = {
+  fontSize: "12px",
+  lineHeight: "13px",
+  padding: "0",
+  margin: "2px",
+  height: "40px"
+};
+
+const ul_li = { display: "flex", flexWrap: "wrap", padding: "2px 2px", margin: "-2px -2px" };
 
 class Explore extends React.Component {
-  render() {
-    const { classes } = this.props;
+  componentDidMount() {
+    // action to get resto list
+    this.props.getResto();
+  }
 
+  render() {
+    const { classes, listResto } = this.props;
+    // filter resto open_time
+    const openTimes = [...new Set(listResto.map(resto => resto.open_time))];
+    const singleTimes = openTimes.filter(item => {
+      const sep = " / ";
+      if (!item.includes(sep)) {
+        return item.trim();
+      }
+    });
+
+    console.log("before singleTimes", singleTimes);
+    
     return (
       <React.Fragment>
         <main className={classes.layout}>
           <Typography variant="title" className={classes.headline}>
-            Explore
+            Restaurants
           </Typography>
           <div className={classes.row}>
             <ul style={ul_li}>
-              {tileData.map(tile => (
-                <li key={tile.key} style={tile.cols === 2 ? li_2 : li_1}>
-                  <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
-                    <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
-                      <img
-                        src={tile.img}
-                        alt={tile.title}
-                        style={tile.cols === 2 ? img_2 : img_1}
-                      />
-                    </div>
-                  </LazyLoad>
-                </li>
-              ))}
+              {listResto.map(tile => {
+                return (
+                  <li key={tile.id} style={li_2}>
+                    <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
+                      <div style={hiddenBlock}>
+                        <p style={pTitle}>{tile.name}</p>
+                        <p style={pSubTitle}>
+                          <b>Open Time:</b>
+                          <br />
+                          {tile.open_time}
+                        </p>
+                        <img src={placeholder} alt={tile.name} />
+                      </div>
+                    </LazyLoad>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <Button variant="outlined" color="default" className={classes.bottomBtn}>
@@ -121,6 +147,6 @@ Explore.propTypes = {
 };
 
 export default connect(
-  "tileData",
+  "listResto",
   actions
-)(hot(module)(withRouter(withRoot(withStyles(styles)(Explore)))));
+)(withRouter(withRoot(withStyles(styles)(Explore))));

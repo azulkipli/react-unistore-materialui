@@ -1,5 +1,4 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -81,4 +80,4 @@ const SwipeDrawer = props => (
   </SwipeableDrawer>
 );
 
-export default hot(module)(SwipeDrawer);
+export default SwipeDrawer;

@@ -6,7 +6,6 @@ import PersonIcon from "@material-ui/icons/Person";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import MenuIcon from "@material-ui/icons/Menu";
-import { hot } from "react-hot-loader";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 
@@ -58,4 +57,4 @@ BottomNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default hot(module)(withStyles(styles)(BottomNav));
+export default withStyles(styles)(BottomNav);

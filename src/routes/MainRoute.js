@@ -11,47 +11,47 @@ const style = {
 const Loading = () => <img src={preloader} alt="loading..." style={style} />;
 
 const Home = Loadable({
-  loader: () => import(/* webpackChunkName: "home"*/ "../Pages/Home"),
+  loader: () => import(/* webpackChunkName: "home"*/ "../pages/Home"),
   loading: () => <Loading />
 });
 
 const SignIn = Loadable({
-  loader: () => import(/* webpackChunkName: "signin"*/ "../Pages/SignIn"),
+  loader: () => import(/* webpackChunkName: "signin"*/ "../pages/SignIn"),
   loading: () => <Loading />
 });
 
 const SignUp = Loadable({
-  loader: () => import(/* webpackChunkName: "signup"*/ "../Pages/SignUp"),
+  loader: () => import(/* webpackChunkName: "signup"*/ "../pages/SignUp"),
   loading: () => <Loading />
 });
 
 const Account = Loadable({
-  loader: () => import(/* webpackChunkName: "account"*/ "../Pages/Account"),
+  loader: () => import(/* webpackChunkName: "account"*/ "../pages/Account"),
   loading: () => <Loading />
 });
 
 const Explore = Loadable({
-  loader: () => import(/* webpackChunkName: "explore"*/ "../Pages/Explore"),
+  loader: () => import(/* webpackChunkName: "explore"*/ "../pages/Explore"),
   loading: () => <Loading />
 });
 
 const Camera = Loadable({
-  loader: () => import(/* webpackChunkName: "camera"*/ "../Pages/Inbox"),
+  loader: () => import(/* webpackChunkName: "camera"*/ "../pages/Inbox"),
   loading: () => <Loading />
 });
 
 const Inbox = Loadable({
-  loader: () => import(/* webpackChunkName: "inbox"*/ "../Pages/Inbox"),
+  loader: () => import(/* webpackChunkName: "inbox"*/ "../pages/Inbox"),
   loading: () => <Loading />
 });
 
 const Notification = Loadable({
-  loader: () => import(/* webpackChunkName: "notification"*/ "../Pages/Notification"),
+  loader: () => import(/* webpackChunkName: "notification"*/ "../pages/Notification"),
   loading: () => <Loading />
 });
 
 const NoMatch = Loadable({
-  loader: () => import(/* webpackChunkName: "nomatch"*/ "../Pages/NoMatch"),
+  loader: () => import(/* webpackChunkName: "nomatch"*/ "../pages/NoMatch"),
   loading: () => <Loading />
 });
 

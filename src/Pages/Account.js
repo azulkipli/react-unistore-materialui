@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
-import { hot } from "react-hot-loader";
 import { connect } from "unistore/react";
 import { actions } from "../store";
 import Avatar from "@material-ui/core/Avatar";
@@ -12,7 +11,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import LazyLoad from "react-lazyload";
-import Loading from "../Components/Loading";
+import Loading from "../components/Loading";
 import { tileData } from "../dummyData";
 
 const styles = theme => ({
@@ -51,6 +50,7 @@ const styles = theme => ({
 
 const img_1 = { left: "50%", position: "relative", transform: "translateX(-50%)", height: "100%" };
 const img_2 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
+const img_3 = { top: "50%", position: "relative", transform: "translateY(-50%)", width: "100%" };
 const li_1 = {
   width: "33.3333%",
   height: "160px",
@@ -61,6 +61,13 @@ const li_1 = {
 const li_2 = {
   width: "66.6667%",
   height: "160px",
+  overflow: "hidden",
+  listStyle: "none",
+  padding: "2.5px 2px"
+};
+const li_3 = {
+  width: "auto",
+  height: "auto",
   overflow: "hidden",
   listStyle: "none",
   padding: "2.5px 2px"
@@ -78,9 +85,7 @@ class Account extends React.Component {
             offset={100}
             height={100}
             placeholder={<Loading />}
-            children={
-              <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>Az</Avatar>
-            }
+            children={<Avatar className={classNames(classes.avatar, classes.bigAvatar)}>Az</Avatar>}
           />
         </div>
         <div className={classes.row}>
@@ -101,15 +106,27 @@ class Account extends React.Component {
         </div>
         <div className={classes.rowGrid}>
           <ul style={ul_li}>
-            {tileData.map(tile => (
-              <li key={tile.key} style={tile.cols === 2 ? li_2 : li_1}>
-                <LazyLoad key={tile.key} height={160} placeholder={<Loading />}>
-                  <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
-                    <img src={tile.img} alt={tile.title} style={tile.cols === 2 ? img_2 : img_1} />
-                  </div>
-                </LazyLoad>
-              </li>
-            ))}
+            {tileData.map(tile => {
+              let tileStyle = li_1;
+              let imgStyle = img_1;
+              if (tile.cols === 2) {
+                tileStyle = li_2;
+                imgStyle = img_2;
+              }
+              if (tile.cols === 3) {
+                tileStyle = li_3;
+                imgStyle = img_3;
+              }
+              return (
+                <li key={tile.key} style={tileStyle}>
+                  <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>
+                    <div style={{ display: "block", overflow: "hidden", height: "160px" }}>
+                      <img src={tile.img} alt={tile.title} style={imgStyle} />
+                    </div>
+                  </LazyLoad>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -126,4 +143,4 @@ Account.propTypes = {
 export default connect(
   "login,tileData",
   actions
-)(hot(module)(withRouter(withRoot(withStyles(styles)(Account)))));
+)(withRouter(withRoot(withStyles(styles)(Account))));

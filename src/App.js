@@ -16,11 +16,11 @@ import IconButton from "@material-ui/core/IconButton";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import InboxIcon from "@material-ui/icons/Inbox";
 // Custom components
-import BottomNav from "./Components/BottomNav";
-import logo from "./images/material_logo.svg";
-import SwipeDrawer from "./Components/SwipeDrawer";
+import BottomNav from "./components/BottomNav";
+import logo from "./images/resist_logo.png";
+import SwipeDrawer from "./components/SwipeDrawer";
 
-import {appconf} from "./etc"
+import { appconf } from "./etc";
 
 const styles = theme => ({
   root: {
@@ -34,14 +34,21 @@ const styles = theme => ({
   },
   imgLogo: {
     display: "inline-block",
-    height: 32,
-    width: 32
+    height: 34,
+    width: 34
   },
   txtLogo: {
     display: "inline-block",
-    fontSize: 16,
-    lineHeight: "32px",
+    fontSize: 20,
+    lineHeight: "38px",
     verticalAlign: "bottom"
+  },
+  txtSlogan: {
+    display: "block",
+    fontSize: 13,
+    lineHeight: "13px",
+    verticalAlign: "bottom",
+    paddingBottom: "4px"
   },
   menuButton: {
     // marginRight: -theme.spacing.unit
@@ -94,16 +101,15 @@ class App extends React.Component {
     const { openDrawer } = this.state;
     const pathname = location.pathname;
     const home = login ? "/explore" : "/";
-    const exclNavback = ['/', home];
-    const showNavback = !exclNavback.includes(pathname)
+    const exclNavback = ["/", home];
+    const showNavback = !exclNavback.includes(pathname);
     return (
       <div className={classes.root}>
         <Helmet>
-          <title>{appconf('NAME')} | {appconf('SLOGAN')}</title>
-          <meta
-            name="description"
-            content="Progressive Web App using ReactJS Unistore Material-UI"
-          />
+          <title>
+            {appconf("NAME")} | {appconf("SLOGAN")}
+          </title>
+          <meta name="description" content={appconf("DESCRIPTION")} />
           <meta
             name="keywords"
             content="pwa, reactjs, unistore, netlify, code-splitting, hot-reload"
@@ -112,24 +118,28 @@ class App extends React.Component {
         </Helmet>
         <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
-            <IconButton className={classes.menuButton} color="default" aria-label="Menu">
+            <IconButton
+              className={classes.menuButton}
+              color="default"
+              aria-label="Menu"
+              onClick={() => history.goBack()}
+              disabled={showNavback ? false : true}>
               {showNavback ? <NavigateBeforeIcon /> : ""}
             </IconButton>
             <Typography
               variant="title"
               color="default"
               className={classes.logo}
-              onClick={() => history.push(home)}
-            >
+              onClick={() => history.push(home)}>
               <img className={classes.imgLogo} src={logo} alt="Logo" />{" "}
-              <span className={classes.txtLogo}>{appconf('NAME')}</span>
+              <span className={classes.txtLogo}>{appconf("NAME")}</span>
+              <span className={classes.txtSlogan}>{appconf("SLOGAN")}</span>
             </Typography>
             <IconButton
               className={classes.menuButton}
               color="default"
               aria-label="Inbox"
-              onClick={() => history.push("/inbox")}
-            >
+              onClick={() => history.push("/inbox")}>
               <InboxIcon />
             </IconButton>
           </Toolbar>
