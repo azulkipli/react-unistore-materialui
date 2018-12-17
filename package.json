@@ -31,6 +31,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:staging": "react-app-rewired build --env-file=.netlify.env",
     "test": "react-app-rewired test --env=jsdom"
   },
   "devDependencies": {

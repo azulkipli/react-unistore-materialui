@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import withRoot from "../withRoot";
 import { withStyles } from "@material-ui/core/styles";
@@ -10,7 +10,7 @@ import { actions } from "../store";
 import Loading from "../components/Loading";
 import LazyLoad from "react-lazyload";
 import placeholder from "../images/placeholder.png";
-import { sortedUniq } from "lodash";
+import { uniq } from "lodash";
 import Select from "react-select";
 import NoSsr from "@material-ui/core/NoSsr";
 import TextField from "@material-ui/core/TextField";
@@ -120,7 +120,7 @@ const li_2 = {
   listStyle: "none",
   padding: "10px 15px"
 };
-const hiddenBlock = { display: "block", overflow: "hidden", height: "auto" };
+// const hiddenBlock = { display: "block", overflow: "hidden", height: "auto" };
 
 const pTitle = {
   fontSize: "15px",
@@ -264,17 +264,21 @@ class Home extends React.Component {
   handleChange = name => selected_time => {
     console.log('selected_time', selected_time);
     let filteredResto = [];
-    selected_time.map(time => {
-      this.state.restos.filter(item => {
+
+    selected_time.forEach(time => {
+      this.props.listResto.forEach(item => {
         if (item.open_time.includes(time.value)) {
           filteredResto.push(item);
         }
       });
+
     });
+
+    console.log('filteredResto', filteredResto);
 
     if (selected_time.length > 0 && filteredResto.length > 0) {
       this.setState({
-        restos: filteredResto
+        restos: uniq(filteredResto)
       });
     }
 
@@ -293,7 +297,7 @@ class Home extends React.Component {
   render() {
     const { classes, theme, listResto } = this.props;
     const { restos } = this.state;
-    console.log("restos", restos);
+    console.log("render-restos", restos);
     const selectStyles = {
       input: base => ({
         ...base,
@@ -321,7 +325,7 @@ class Home extends React.Component {
         }
         return false;
       });
-      filterOpenTimes = sortedUniq(allOpenTimes);
+      filterOpenTimes = uniq(allOpenTimes);
     }
 
     return (
@@ -352,8 +356,7 @@ class Home extends React.Component {
           </div>
           <div className={classes.row}>
             <ul style={ul_li}>
-              {restos.map((resto,index) => {
-                console.log('index', index);
+              {restos.map((resto) => {
                 return (
                   <li key={resto.id} style={li_2}>
                     <LazyLoad scroll offset={160} height={160} placeholder={<Loading />}>

@@ -96,15 +96,6 @@ class Explore extends React.Component {
   render() {
     const { classes, listResto } = this.props;
     // filter resto open_time
-    const openTimes = [...new Set(listResto.map(resto => resto.open_time))];
-    const singleTimes = openTimes.filter(item => {
-      const sep = " / ";
-      if (!item.includes(sep)) {
-        return item.trim();
-      }
-    });
-
-    console.log("before singleTimes", singleTimes);
     
     return (
       <React.Fragment>

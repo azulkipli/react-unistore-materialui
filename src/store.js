@@ -3,6 +3,8 @@ import devtools from "unistore/devtools";
 import axios from "axios";
 import persistStore from "unissist";
 import localStorageAdapter from "unissist/integrations/localStorageAdapter";
+import { uniq } from "lodash";
+
 // import createHistory from "history/createBrowserHistory";
 // const history = createHistory();
 
@@ -28,7 +30,7 @@ export const store =
     ? createStore(initialState)
     : devtools(createStore(initialState));
 
-// persistStore(store, adapter);
+persistStore(store, adapter);
 
 const env = process.env;
 
@@ -51,7 +53,7 @@ export const actions = store => ({
         console.log(error);
       });
 
-    return { listResto: result };
+    return { listResto: uniq(result) };
   },
 
   async doSignup(state) {
