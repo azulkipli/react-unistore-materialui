@@ -4,7 +4,7 @@ import axios from "axios";
 import persistStore from "unissist";
 import localStorageAdapter from "unissist/integrations/localStorageAdapter";
 import { uniq } from "lodash";
-
+import {fakeListResto} from "./dummyData";
 // import createHistory from "history/createBrowserHistory";
 // const history = createHistory();
 
@@ -50,7 +50,8 @@ export const actions = store => ({
       })
       .catch(function(error) {
         // handle error
-        console.log(error);
+        console.log('error getResto',error);
+        return fakeListResto;
       });
 
     return { listResto: uniq(result) };

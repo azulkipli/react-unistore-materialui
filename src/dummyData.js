@@ -57,7 +57,7 @@ export const tileData = [
   }
 ];
 
-export const listResto = [
+export const fakeListResto = [
   {
     id: 1,
     name: "Osakaya Restaurant",
