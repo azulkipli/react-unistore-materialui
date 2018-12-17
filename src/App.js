@@ -20,6 +20,8 @@ import BottomNav from "./Components/BottomNav";
 import logo from "./images/material_logo.svg";
 import SwipeDrawer from "./Components/SwipeDrawer";
 
+import {appconf} from "./etc"
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -44,7 +46,7 @@ const styles = theme => ({
   menuButton: {
     // marginRight: -theme.spacing.unit
   },
-  appbar: {
+  appconfbar: {
     boxShadow:
       "0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
   },
@@ -95,7 +97,7 @@ class App extends React.Component {
     return (
       <div className={classes.root}>
         <Helmet>
-          <title>reunima | react unistore material-ui</title>
+          <title>{appconf('NAME')} | {appconf('SLOGAN')}</title>
           <meta
             name="description"
             content="Progressive Web App using ReactJS Unistore Material-UI"
@@ -104,7 +106,7 @@ class App extends React.Component {
             name="keywords"
             content="pwa, reactjs, unistore, netlify, code-splitting, hot-reload"
           />
-          <meta name="author" content="Azul" />
+          <meta name="author" content="azulkipli" />
         </Helmet>
         <AppBar position="static" color="default" className={classes.appbar}>
           <Toolbar className={classes.topbar}>
@@ -118,7 +120,7 @@ class App extends React.Component {
               onClick={() => history.push(home)}
             >
               <img className={classes.imgLogo} src={logo} alt="Logo" />{" "}
-              <span className={classes.txtLogo}>ReUniMa</span>
+              <span className={classes.txtLogo}>{appconf('NAME')}</span>
             </Typography>
             <IconButton
               className={classes.menuButton}

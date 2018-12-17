@@ -57,7 +57,7 @@ const NoMatch = Loadable({
 
 const PrivateRoute = ({ component: Component, ...args }) => {
   const login = args.login;
-  console.log("args", args);
+  // console.log("args", args);
   return (
     <Route
       {...args}

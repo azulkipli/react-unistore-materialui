@@ -79,11 +79,7 @@ class Account extends React.Component {
             height={100}
             placeholder={<Loading />}
             children={
-              <Avatar
-                alt="Adelle Charles"
-                src="https://material-ui.com/static/images/uxceo-128.jpg"
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
+              <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>Az</Avatar>
             }
           />
         </div>

@@ -3,11 +3,11 @@ import devtools from "unistore/devtools";
 import axios from "axios";
 import persistStore from "unissist";
 import localStorageAdapter from "unissist/integrations/localStorageAdapter";
-import createHistory from "history/createBrowserHistory";
-const history = createHistory();
+// import createHistory from "history/createBrowserHistory";
+// const history = createHistory();
 
 // Get the current location.
-const location = history.location;
+// const location = history.location;
 
 const initialState = {
   email: "",
@@ -28,6 +28,8 @@ export const store =
 
 persistStore(store, adapter);
 
+const env = process.env
+
 export const actions = store => ({
   // Actions can just return a state update:
   setField: ({ email, password }, event) => {
@@ -37,7 +39,7 @@ export const actions = store => ({
 
   async doSignup(state) {
     let result = await axios
-      .get("http://localhost:3232")
+      .get(env.REACT_APP_API_LOGIN)
       .then(function(response) {
         // handle success
         console.log(response.data);
@@ -53,7 +55,7 @@ export const actions = store => ({
 
   async doLogout(state) {
     let result = await axios
-      .get("http://localhost:3232")
+      .get(env.REACT_APP_API_LOGIN)
       .then(function(response) {
         // handle success
         console.log("doLogout res", response.data);
@@ -72,7 +74,7 @@ export const actions = store => ({
 
   async doLogin(state) {
     let result = await axios
-      .get("http://localhost:3232")
+      .get(env.REACT_APP_API_LOGIN)
       .then(function(response) {
         // handle success
         console.log(response.data);
