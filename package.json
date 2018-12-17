@@ -29,10 +29,11 @@
     "unistore": "^3.0.6"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "build:netlify": "react-app-rewired build --env-file=.netlify.env",
-    "test": "react-app-rewired test --env=jsdom"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:netlify": "react-scripts build --env-file=.netlify.env",
+    "build:surge": "react-scripts build --env-file=.surge.env",
+    "test": "react-scripts test --env=jsdom"
   },
   "devDependencies": {
     "babel-plugin-transform-remove-console": "^6.9.4",
